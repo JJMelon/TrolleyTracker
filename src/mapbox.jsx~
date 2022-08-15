@@ -1,0 +1,51 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import mapboxgl from 'mapbox-gl';
+
+//Import Data
+
+
+// Constants
+mapboxgl.accessToken = "pk.eyJ1IjoiamptZWxvbnMiLCJhIjoiY2w2cGRuOTN1MDJ6NTNjanZib2tlcGtpYyJ9.FfmnDYcir75Ttra7-4APcQ"
+const mapboxStyle = "mapbox://styles/jjmelons/cl6pk0ila006k15pc5pzb14j2"
+
+const trainIds = [
+  'O', 'B', 'R', 'S'
+];
+
+
+class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      trainPositions: {},
+    }
+    this.showAll = true;
+    this.mapLoaded = false;
+  }
+
+  componentDidMount() {
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: mapboxStyle
+    });
+  }
+
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
+  render() {
+    const style = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: '100%'
+    };
+
+    return <div style={style} ref={el => this.mapContainer = el} />;
+  }
+}
+
+ReactDOM.render(<Map />, document.getElementById('app'));
